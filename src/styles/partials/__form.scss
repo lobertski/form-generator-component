@@ -1,0 +1,29 @@
+$padding-normal: 2rem;
+
+.form-container {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-between;
+
+    .form-card {
+        width: 300px;
+        border-radius: 8px;
+        padding: 16px;
+        margin-bottom: 16px;
+        box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+    }
+
+    .form-title {
+        padding: 1rem;
+        text-align: start
+    }
+
+}
+
+.stepper-container {
+    padding: $padding-normal;
+}
+
+.stack-container {
+    margin-bottom: 1rem
+}
