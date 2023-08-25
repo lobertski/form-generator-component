@@ -5,8 +5,8 @@ import { HTMLProps } from "react";
 
 export const Stepper: React.FC<HTMLProps<HTMLDivElement>> = () => {
   const { steps, currentStep } = useSelector(States.Form);
-  const userCurrentStep =
-    currentStep + 1 === steps.length ? steps.length + 1 : currentStep;
+  const isFinalStep = currentStep + 1 === steps.length;
+  const userCurrentStep = isFinalStep ? steps.length + 1 : currentStep;
   return (
     <MuiStepper className="stepper-container" activeStep={userCurrentStep}>
       {steps.map(({ label }, index: number) => (
