@@ -1,13 +1,12 @@
 import { createSlice } from "@reduxjs/toolkit";
 
 const initialState = {
-  formValues: [],
+  formValues: {},
   currentStep: 0,
   formID: "",
   steps: [],
   loading: false,
   error: "",
-  formSelected: {},
 };
 
 const formSlice = createSlice({
@@ -28,11 +27,11 @@ const formSlice = createSlice({
       state.formID = formID;
       state.steps = steps;
     },
-    submitFormRequest: (state) => {
+    submitFormRequest: (state, action) => {
+      state.formValues = action.payload;
       state.loading = true;
     },
-    submitFormSuccess: (state, { payload }) => {
-      state.formValues = payload;
+    submitFormSuccess: (state) => {
       state.loading = false;
     },
     submitFormError: (state, { payload }) => {

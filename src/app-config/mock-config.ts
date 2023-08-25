@@ -86,7 +86,7 @@ export const basicMockForm = {
     {
       id: "final-step",
       label: "Success",
-      component: "SucessMessage",
+      component: "SucessPage",
     },
   ],
   formSections: [...mockSectionForm],

@@ -5,7 +5,7 @@ const formAPI = axios.create({
 });
 
 export const postFormAPI = async (payload: Record<string, unknown>) => {
-  const response = await formAPI.post("/basicForm", { ...payload });
+  const response = await formAPI.post("/basicForm/", { ...payload });
   return response.status;
 };
 

@@ -7,10 +7,12 @@ import {
   submitFormSuccess,
 } from "../slices/formSlice";
 
-function* submitFormSage(action): Generator<any, any, any> {
+function* submitFormSage(
+  action: Record<string, any>
+): Generator<any, any, any> {
   try {
-    const response = yield call(postFormAPI, action.payload);
-    yield put(submitFormSuccess(response.data));
+    yield call(postFormAPI, action.payload);
+    yield put(submitFormSuccess());
   } catch (error: any) {
     yield put(submitFormError(error.message));
   }

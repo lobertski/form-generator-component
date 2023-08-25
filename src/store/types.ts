@@ -3,8 +3,10 @@ export interface RootState {
 }
 
 interface IFormState {
-  formValues: [];
+  formValues: Record<string, any>;
   currentStep: number;
   formID: string;
   steps: [];
+  loading: boolean;
+  error: string;
 }

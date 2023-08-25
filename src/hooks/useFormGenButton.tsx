@@ -9,10 +9,8 @@ export const useFormButton = (action: string) => {
   const { currentStep } = useSelector(States.Form);
   const handleButton = (e?: MouseEvent) => {
     e?.preventDefault();
-    console.log(1)
     dispatch(setStepForm(currentStep + 1));
   };
-  console.log(action, "sdfsd");
   switch (action) {
     case "next":
       handleButton();

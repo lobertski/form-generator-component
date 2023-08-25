@@ -1,4 +1,4 @@
-import { SyntheticEvent, useCallback } from "react";
+import { useCallback } from "react";
 import { MDBBtn } from "mdb-react-ui-kit";
 import Stack from "react-bootstrap/Stack";
 import { IButtons } from "../../../app-config/types";
@@ -10,14 +10,20 @@ import {
   submitFormRequest,
 } from "../../../store/slices/formSlice";
 
-export const Button = ({ buttons }: { buttons: IButtons[] }) => {
+export const Button = ({
+  buttons,
+  handleButtonClick,
+}: {
+  buttons: IButtons[];
+  handleButtonClick?: any;
+}) => {
   const dispatch = useDispatch();
   const { currentStep } = useSelector(States.Form);
 
-  const handleStep = useCallback((e: SyntheticEvent) => {
-    e.preventDefault();
+  const handleStep = useCallback(() => {
     dispatch(setStepForm(currentStep + 1));
     dispatch(submitFormRequest());
+    handleButtonClick();
   }, []);
 
   return (
