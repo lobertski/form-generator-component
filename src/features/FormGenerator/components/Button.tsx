@@ -22,7 +22,6 @@ export const Button = ({
 
   const handleStep = useCallback(() => {
     dispatch(setStepForm(currentStep + 1));
-    dispatch(submitFormRequest());
     handleButtonClick();
   }, []);
 
