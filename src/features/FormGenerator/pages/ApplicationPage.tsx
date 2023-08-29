@@ -5,7 +5,6 @@ import { useDispatch } from "react-redux";
 import { Button, Divider, Inputs } from "../components";
 import { IFieldList, ISection } from "../../../app-config/types";
 import {
-  setFieldErrors,
   setFirstMount,
   setStepForm,
   submitFormRequest,
@@ -17,27 +16,37 @@ import { yupResolver } from "@hookform/resolvers/yup";
 import useSelector from "../../../hooks/useSelector";
 import { States } from "../../../hooks/types";
 
-const schema = yup
-  .object()
-  .shape({
-    first_name: yup.string().required("Names is required"),
-    last_name: yup.string().required("Name is required"),
-    email: yup.string().email("Invalid email").required("Email is required"),
-    address: yup.string().required("Address is required"),
-  })
-  .required();
+const generateFieldValidations = (formSections: ISection[]) => {
+  const validations = formSections.reduce(
+    (accumulator: Record<string, any>, section: ISection) => {
+      section.fieldList.forEach((field: IFieldList) => {
+        accumulator[field.id] = field.validation;
+      });
+      return accumulator;
+    },
+    {}
+  );
+  const schema = yup
+    .object()
+    .shape({
+      ...validations,
+    })
+    .required();
+  return schema;
+};
 
 export const ApplicationPage = () => {
   const { buttons, formSections, steps } = useSelectedForm("basic-form");
   const { currentStep } = useSelector(States.Form);
+  const dispatch = useDispatch();
   const {
     handleSubmit,
     control,
     formState: { errors },
   } = useForm({
-    resolver: yupResolver(schema),
+    resolver: yupResolver(generateFieldValidations(formSections)),
   });
-  const dispatch = useDispatch();
+
   useEffect(() => {
     dispatch(setFirstMount({ formID: "basic-form", steps }));
   }, []);

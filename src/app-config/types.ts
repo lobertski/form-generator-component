@@ -1,3 +1,4 @@
+import { AnySchema } from "yup";
 export interface IFieldList {
   id: string;
   type: string;
@@ -10,7 +11,7 @@ export interface IFieldList {
   style: {
     width: string;
   };
-  rules: never[];
+  validation: AnySchema;
 }
 
 export interface IButtons {

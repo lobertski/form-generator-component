@@ -1,3 +1,4 @@
+import * as yup from "yup";
 const mockSectionForm = [
   {
     sectionName: "Personal Information",
@@ -15,7 +16,7 @@ const mockSectionForm = [
         style: {
           width: "100%",
         },
-        rules: [],
+        validation: yup.string().required("First Name is required"),
       },
       {
         id: "last_name",
@@ -29,7 +30,7 @@ const mockSectionForm = [
         style: {
           width: "100%",
         },
-        rules: [],
+        validation: yup.string().required("Last Name is required"),
       },
     ],
   },
@@ -49,7 +50,10 @@ const mockSectionForm = [
         style: {
           width: "100%",
         },
-        rules: [],
+        validation: yup
+          .string()
+          .email("Invalid email")
+          .required("Email is required"),
       },
       {
         id: "address",
@@ -63,7 +67,7 @@ const mockSectionForm = [
         style: {
           width: "100%",
         },
-        rules: [],
+        validation: yup.string().required("Address is required"),
       },
     ],
   },
