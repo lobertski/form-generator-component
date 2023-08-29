@@ -1,29 +1,41 @@
-import { Controller, Control } from "react-hook-form";
-import { MDBInput } from "mdb-react-ui-kit";
+/* eslint-disable @typescript-eslint/no-explicit-any */
+import { Controller, Control, FieldErrors } from "react-hook-form";
+import { MDBInput, MDBValidationItem } from "mdb-react-ui-kit";
 import { IFieldList } from "../../../app-config/types";
 
 interface InputsProps {
   field: IFieldList;
-  control: Control<Record<string, any>>;
+  control: Control<any>;
+  errors: FieldErrors<Record<string, any>>;
 }
 
-export const Inputs = ({ field, control }: InputsProps) => {
+export const Inputs = ({ field, control, errors }: InputsProps) => {
   const { type, label, id } = field;
+  const isFieldError = !!errors[id];
 
   return (
     <>
-      <div style={{ marginBottom: "2rem" }}>
+      <div style={{ marginBottom: "1rem" }}>
         <Controller
           control={control}
           name={id}
-          render={({ field: { onChange, onBlur, value } }) => (
-            <MDBInput
-              type={type}
-              label={label}
-              onChange={onChange}
-              onBlur={onBlur}
-              value={value}
-            />
+          render={({ field }) => (
+            <MDBValidationItem
+              invalid={isFieldError}
+              feedback={errors[id]?.message?.toString() ?? ""}
+            >
+              <MDBInput
+                type={type}
+                label={label}
+                {...field}
+                className={errors[id] && "is-invalid"}
+              />
+              {errors[id] && (
+                <div className="invalid-feedback">
+                  {errors[id]?.message?.toString()}
+                </div>
+              )}
+            </MDBValidationItem>
           )}
         />
       </div>
