@@ -5,6 +5,7 @@ export interface IFieldList {
   component: string;
   label: string;
   required: boolean;
+  hidden: boolean | { when: string; is: (value: string) => boolean };
   defaultValue: string;
   value: string;
   placeholder: string;

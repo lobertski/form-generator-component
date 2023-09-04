@@ -11,6 +11,7 @@ const mockSectionForm = [
         label: "First Name",
         required: true,
         defaultValue: "",
+        hidden: false,
         value: "",
         placeholder: "Write your First Name...",
         style: {
@@ -25,6 +26,7 @@ const mockSectionForm = [
         label: "Last Name",
         required: true,
         defaultValue: "",
+        hidden: false,
         value: "",
         placeholder: "Write your Last Name...",
         style: {
@@ -45,6 +47,7 @@ const mockSectionForm = [
         label: "Email",
         required: true,
         defaultValue: "",
+        hidden: false,
         value: "",
         placeholder: "",
         style: {
@@ -60,14 +63,26 @@ const mockSectionForm = [
         type: "text",
         component: "text-field",
         label: "Address",
-        required: true,
+        required: false,
         defaultValue: "",
         value: "",
         placeholder: "",
+        hidden: {
+          when: "email",
+          is: (value: string) => !value,
+        },
         style: {
           width: "100%",
         },
-        validation: yup.string().required("Address is required"),
+        validation: yup
+          .string()
+          .required()
+          .when("email", {
+            is: (value: string) => !!value,
+            then: (schema: yup.AnyObjectSchema) =>
+              schema.required("Address is required"),
+            otherwise: (schema: yup.AnyObjectSchema) => schema.notRequired(),
+          }),
       },
     ],
   },

@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/no-explicit-any */
 import { MDBContainer, MDBRow, MDBTypography } from "mdb-react-ui-kit";
 import { Fragment } from "react";
 import { useSelectedForm } from "../../../hooks";

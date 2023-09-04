@@ -26,25 +26,23 @@ const generateFieldValidations = (formSections: ISection[]) => {
     },
     {}
   );
-  const schema = yup
-    .object()
-    .shape({
-      ...validations,
-    })
-    .required();
-  return schema;
+  return yup.object().shape({
+    ...validations,
+  });
 };
 
 export const ApplicationPage = () => {
   const { buttons, formSections, steps } = useSelectedForm("basic-form");
   const { currentStep } = useSelector(States.Form);
   const dispatch = useDispatch();
+  const schema = generateFieldValidations(formSections);
   const {
     handleSubmit,
     control,
+    watch,
     formState: { errors },
   } = useForm({
-    resolver: yupResolver(generateFieldValidations(formSections)),
+    resolver: yupResolver(schema),
   });
 
   useEffect(() => {
@@ -70,7 +68,16 @@ export const ApplicationPage = () => {
             </MDBTypography>
             {fieldList.map((field: IFieldList) => (
               <Fragment key={field.id}>
-                <Inputs errors={errors} control={control} field={field} />
+                <Inputs
+                  errors={errors}
+                  control={control}
+                  field={field}
+                  hidden={
+                    typeof field.hidden === "object"
+                      ? field.hidden.is(watch(field.hidden.when))
+                      : field.hidden
+                  }
+                />
               </Fragment>
             ))}
           </MDBRow>
